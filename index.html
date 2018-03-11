@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <title>Working on the Train</title>
+    <style>
+        .jumbotron {
+            background-color: darkred;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1>Working on the Train</h1>
+            <p>Choo choo</p>
+        </div>
+    </div>
+</main>
+
+    <main class="container">
+        <table class="table">
+                <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Current Train Schedule</th>
+                        </tr>
+                        <!-- Current Employee -->
+                </thead>
+            <thead class="thead-dark">
+
+                <tr>
+
+                    <th scope="col">Train</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency (minutes)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Minutes Away</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th scope="row">Train 101</th>
+
+                    <td>Denver</td>
+
+                    <td>25</td>
+
+                    <td>15:30</td>
+                    <td>10</td>
+                   
+                </tr>
+
+
+
+            </tbody>
+        </table>
+        <form class="edit-form">
+            <div class="form-group">
+                <label for="trainName">Train Name</label>
+                <input type="trainName" class="form-control" id="trainName" aria-describedby="nameHelp" placeholder="Enter train name" name="trainName">
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="destination" class="form-control" id="destination" placeholder="Train destination" name="destination">
+            </div>
+
+            <div class="form-group">
+                <label for="trainTime">First Train Time (enter in Military Time)</label>
+                <input type="trainTime" class="form-control" id="trainTime" placeholder="Train time" name="trainTime">
+            </div>
+
+            <div class="form-group">
+                <label for="frequency">Frequency (minutes)</label>
+                <input type="frequency" class="form-control" id="frequency" placeholder="Frequency" name="frequency">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+    </main>
+    
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD7V2F-3nHO2yptuzja5o0udDFd2kJj1gw",
+    authDomain: "train-d41e5.firebaseapp.com",
+    databaseURL: "https://train-d41e5.firebaseio.com",
+    projectId: "train-d41e5",
+    storageBucket: "",
+    messagingSenderId: "96769958591"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+
+        $(function () {
+            let database = firebase.database();
+            let newInfo = database.ref("table");
+
+            
+
+            $(".edit-form").on("submit", function (e) {
+                e.preventDefault();
+
+                let form = $(this);
+
+                let username = form.find("[name='trainName']").val();
+                let name = form.find("[name='destination']").val();
+                let email = form.find("[name='trainTime']").val();
+                let reason = form.find("[name='frequency']").val();
+
+                let key = localStorage.userkey;
+
+                firebase.database().ref('users/' + key).update({
+                    trainName: trainName,
+                    destination: destination,
+                    trainTime: trainTime,
+                    frequency: frequency
+                });
+            })
+        })
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
