@@ -82,43 +82,26 @@
   };
   firebase.initializeApp(config);
 
+var messagesRef = firebase.database().ref("messages");
+  var currentTime = moment();
 
 
-        
-var database = firebase.database();
-var currentTime = moment();
 
-database.ref().on("child_added", function(childSnap) {
+  //get form input
+  document.getElementById('trainForm').addEventListener('submit', submitForm);
 
-    var name = childSnap.val().trainName;
-    var destination = childSnap.val().destination;
-    var firstTrain = childSnap.val().trainTime;
-    var frequency = childSnap.val().frequency;
-    var min = childSnap.val().min;
-    var next = childSnap.val().next;
+  function submitForm (e){
+      e.preventDefault();
 
-    $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
-});
+      var trainName = getInputValues("trainNameInput");
+      var destination = getInputValues("destinationInput"); 
+      var first = getInputValues("firstInput"); 
+      var frequency = getInputValues("frequencyInput");
 
-database.ref().on("value", function(snapshot) {
-   
 
-});
+      saveMessage(trainName, destination, first, frequency);
 
-//gets form info
-$("#newTrain").on("click", function() {
 
-    var trainName = $("#trainName").val().trim();
-    var destination = $("#destination").val().trim();
-    var firstTrain = $("#firstTrain").val().trim();
-    var frequency = $("#frequency").val().trim();
-
-    console.log(trainName);
-    console.log(destination);
-    console.log(firstTrain);
-    console.log(frequency);
-
-    //ensures that there are no blanks on form
     if (trainName == "") {
         alert('Enter a train name.');
         return false;
@@ -127,7 +110,7 @@ $("#newTrain").on("click", function() {
         alert('Enter a destination.');
         return false;
     }
-    if (firstTrain == "") {
+    if (first == "") {
         alert('Enter a first train time.');
         return false;
     }
@@ -136,35 +119,47 @@ $("#newTrain").on("click", function() {
         return false;
     }
 
-    // calculating next train time
-    //go back one year so time doesn't mess up
-    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
-    // find the time difference between current time and the first train so we can get the remainder for the next train time
+
+    //subtracts the first train time back a year to ensure it's before current time.
+    var firstTrainConverted = moment(first, "hh:mm").subtract("1, years");
+    // the time difference between current time and the first train
     var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
     var remainder = difference % frequency;
     var minUntilTrain = frequency - remainder;
     var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
 
-    var newTrain = {
-        name: trainName,
-        destination: destination,
-        firstTrain: firstTrain,
-        frequency: frequency,
-        min: minUntilTrain,
-        next: nextTrain
-    }
+    
 
-    console.log(newTrain);
-    database.ref().push(newTrain);
+      console.log (trainName);
+      console.log (first);
+      console.log (minUntilTrain);
+      console.log(nextTrain);
+  }
 
-    $("#trainName").val("");
-    $("#destination").val("");
-    $("#firstTrain").val("");
-    $("#frequency").val("");
+  function getInputValues(id){
+      return document.getElementById(id).value;
+  }
 
-    return false;
-});
+  //save message to firebase
+
+  function saveMessage (trainName, destination, first, frequency){
+      var newMessageRef = messagesRef.push();
+      newMessageRef.set({
+          trainName: trainName,
+          destination: destination,
+          first: first,
+          frequency: frequency
+      })
+  }
+
     </script>
+   
+   
+</body>
+
+
+   
+
    
    
 
