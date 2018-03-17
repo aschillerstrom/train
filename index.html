@@ -134,6 +134,8 @@ var messagesRef = firebase.database().ref("messages");
       console.log (first);
       console.log (minUntilTrain);
       console.log(nextTrain);
+   $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextTrain + "</td><td>" + minUntilTrain + "</td></tr>");
+
   }
 
   function getInputValues(id){
