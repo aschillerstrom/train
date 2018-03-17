@@ -40,7 +40,7 @@
                     <div class='row'>
                         <div class='card-panel'>
                             <h4 class='center-align'>Add a Train</h4>
-                            <form>
+                            <form id="trainForm">
                                 <div class="input-field col s12">
                                     <input type="text" class="validate" id="trainNameInput">
                                     <label for="">Train Name</label>
@@ -62,16 +62,14 @@
                         </div>
                     </div>
                 </div>
-            </body>
+           
             
             
 <!---JS section-->
 
-
-  // Initialize Firebase
   
 <script>
-  // Initialize Firebase
+    // Initialize Firebase
   var config = {
     apiKey: "AIzaSyBtz1EsjPCo76FeehEwmtY457LVlupn4ME",
     authDomain: "trainschedule-3c634.firebaseapp.com",
@@ -82,7 +80,7 @@
   };
   firebase.initializeApp(config);
 
-var messagesRef = firebase.database().ref("messages");
+  var messagesRef = firebase.database().ref("messages");
   var currentTime = moment();
 
 
@@ -134,7 +132,7 @@ var messagesRef = firebase.database().ref("messages");
       console.log (first);
       console.log (minUntilTrain);
       console.log(nextTrain);
-   $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextTrain + "</td><td>" + minUntilTrain + "</td></tr>");
+      $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextTrain + "</td><td>" + minUntilTrain + "</td></tr>");
 
   }
 
@@ -158,12 +156,5 @@ var messagesRef = firebase.database().ref("messages");
    
    
 </body>
-
-
-   
-
-   
-   
-
 
 </html>
