@@ -133,7 +133,7 @@
       console.log (minUntilTrain);
       console.log(nextTrain);
       $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextTrain + "</td><td>" + minUntilTrain + "</td></tr>");
-
+      $("#trainForm")[0].reset();
   }
 
   function getInputValues(id){
